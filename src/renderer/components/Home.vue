@@ -11,7 +11,7 @@
       </md-tab>
 
       <md-tab id="discreta" md-label="Variavéis Discreta">
-        <p></p>
+        <discreta></discreta>
       </md-tab>
     </md-tabs>
 
@@ -20,10 +20,12 @@
 
 <script>
   import Continua from './Continua.vue'
+  import Discreta from './Discreta.vue'
   
   export default {
     components: {
-      'continua': Continua
+      'continua': Continua,
+      'discreta': Discreta
     }
   }
 </script>

@@ -1,5 +1,8 @@
 const state = {
-  main: 0
+  discreta: {
+    title: 'teste',
+    values: ''
+  }
 }
 
 const mutations = {
@@ -13,7 +16,6 @@ const mutations = {
 
 const actions = {
   someAsyncTask ({ commit }) {
-    // do something async
     commit('INCREMENT_MAIN_COUNTER')
   }
 }
