@@ -1,11 +1,35 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import modules from './modules'
-
 Vue.use(Vuex)
 
-export default new Vuex.Store({
-  modules,
-  strict: process.env.NODE_ENV !== 'production'
+const store = new Vuex.Store({
+  state: {
+    continua: {
+      title: '',
+      values: ''
+    },
+    discreta: {
+      title: '',
+      values: '',
+      indice: [],
+      frequence: [],
+      res: false
+    }
+  },
+  actions: {
+  },
+  mutations: {
+    SET_DISCRETA(state, response){
+      state.discreta = response
+      console.log(state.discreta)
+    }
+  },
+  getters: {
+  },  
+  modules: {
+    
+  }
 })
+
+export default store

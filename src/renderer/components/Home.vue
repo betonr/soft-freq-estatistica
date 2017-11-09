@@ -6,12 +6,12 @@
     </md-toolbar>
     
     <md-tabs md-fixed>
-      <md-tab id="continua" md-label="Variavéis Continuas">
-        <continua></continua>
-      </md-tab>
-
       <md-tab id="discreta" md-label="Variavéis Discreta">
         <discreta></discreta>
+      </md-tab>
+
+      <md-tab id="continua" md-label="Variavéis Continuas">
+        <continua></continua>
       </md-tab>
     </md-tabs>
 

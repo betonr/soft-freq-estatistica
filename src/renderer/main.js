@@ -11,7 +11,8 @@ Vue.material.registerTheme('default', {
   primary: 'blue-grey',
   accent: 'green',
   warn: 'red',
-  success: 'green'
+  success: 'green',
+  super: 'yellow'
 })
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
