@@ -13,7 +13,13 @@ const store = new Vuex.Store({
       title: '',
       values: '',
       indice: [],
-      frequence: [],
+      fi: [],
+      fia: [],
+      fri: [],
+      fria: [],
+      media: 0,
+      moda: 0,
+      desvio_padrao: 0,
       res: false
     }
   },

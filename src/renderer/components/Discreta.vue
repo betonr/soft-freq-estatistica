@@ -19,10 +19,17 @@
         </form>
 
         <article v-show="discreta.res">
-            <h2 class="md-title" style="padding: 15px;">Resultado:
+            <hr>
+            <h2 class="md-title" style="padding: 15px;">
+                Resultado:
                 <md-button class="md-raised md-warn" style="margin-top: -5px; color: white;" @click="viewMap">
                     <md-icon>search</md-icon> Ver Gráfico
                 </md-button>
+                <span style="float:right;">
+                    Média: {{ discreta.media }} |
+                    Moda: {{ discreta.moda }} |
+                    Desvio Padrão: {{ discreta.desvio_padrao }}
+                </span> 
             </h2>
             <md-table>
                 <md-table-header>
@@ -30,8 +37,8 @@
                         <md-table-head md-numeric>I</md-table-head>
                         <md-table-head md-numeric>{{ discreta.title }}</md-table-head>
                         <md-table-head md-numeric>fi</md-table-head>
-                        <md-table-head md-numeric>fri</md-table-head>
                         <md-table-head md-numeric>Fi.a</md-table-head>
+                        <md-table-head md-numeric>Fri</md-table-head>
                         <md-table-head md-numeric>Fri.a</md-table-head>
                     </md-table-row>
                 </md-table-header>
@@ -40,17 +47,17 @@
                     <md-table-row v-for="(value, indice) in discreta.indice" :key="indice">
                         <md-table-cell>{{ indice+1 }}</md-table-cell>
                         <md-table-cell>{{ value }}</md-table-cell>
-                        <md-table-cell>{{ discreta.frequence[indice]}}</md-table-cell>
-                        <md-table-cell>0,1520</md-table-cell>
-                        <md-table-cell>0,1520</md-table-cell>
-                        <md-table-cell>0,1520</md-table-cell>
+                        <md-table-cell>{{ discreta.fi[indice] }}</md-table-cell>
+                        <md-table-cell>{{ discreta.fia[indice] }}</md-table-cell>
+                        <md-table-cell>{{ discreta.fri[indice] }}</md-table-cell>
+                        <md-table-cell>{{ discreta.fria[indice] }}</md-table-cell>
                     </md-table-row>
                     <md-table-row>
                         <md-table-cell></md-table-cell>
                         <md-table-cell></md-table-cell>
-                        <md-table-cell class="total">&Sigma;fi = {{ discreta.frequence.reduce((a, b) => a + b, 0) }}</md-table-cell>
+                        <md-table-cell class="total">&Sigma;fi = {{ discreta.fi.reduce((a, b) => a + b, 0) }}</md-table-cell>
                         <md-table-cell></md-table-cell>
-                        <md-table-cell></md-table-cell>
+                        <md-table-cell class="total">&Sigma;fri = {{ discreta.fri.reduce((a, b) => a + b, 0) }}</md-table-cell>
                         <md-table-cell></md-table-cell>
                     </md-table-row>
                 </md-table-body>
@@ -74,18 +81,36 @@
                 let numbers = (values.split(' ')).sort((a,b) => a-b);
                 let indice = [...new Set(numbers)];
 
-                let frequence = [];
+                //fi e fia
+                let fi = [];
+                let fia = [];
+                var soma = 0;
                 indice.forEach(val => {
-                    let fr = 0;
+                    let freq = 0;
                     numbers.map(values => {
-                        if(val==values) fr++;
+                        if(val==values) freq++;
                     });
-                    frequence.push(fr);
-                })      
+                    soma+=freq;
+                    fia.push(soma);
+                    fi.push(freq);
+                })   
+                
+                //fri fria
+                let fri = []
+                let fria = []
+                let total = fi.reduce((a, b) => a + b, 0);
+                indice.forEach((item, indice, array) => {
+                    fri.push( parseFloat((fi[indice]/total).toFixed(4)) );
+                    fria.push( parseFloat((fia[indice]/total).toFixed(4)) );
+                });
+
+                //media, moda, desvio
+                let moda = numbers.length%2 != 0 ? numbers[parseInt(numbers.length/2)] : 
+                        (parseInt(numbers[parseInt(numbers.length/2)-1]) + parseInt(numbers[parseInt(numbers.length/2)]) )/2;
 
                 response = {
                     ...this.discreta,
-                    indice, frequence, res: true
+                    indice, fi, fia, fri, fria, moda, res: true
                 }
                 this.$store.commit('SET_DISCRETA', response)       
       
@@ -105,6 +130,9 @@
         font-size: 2em;
         color: #363636;
         padding: 15px;
+    }
+    form{
+        margin-bottom: 35px;
     }
     .md-table-head {
         text-transform: uppercase;
