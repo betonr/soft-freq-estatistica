@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueMaterial from 'vue-material'
+import VueCharts from 'vue-charts'
 
 import App from './App'
 import router from './router'
@@ -11,9 +12,10 @@ Vue.material.registerTheme('default', {
   primary: 'blue-grey',
   accent: 'green',
   warn: 'red',
-  success: 'green',
-  super: 'yellow'
+  success: 'green'
 })
+
+Vue.use(VueCharts)
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.config.productionTip = false

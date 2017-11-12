@@ -63,6 +63,17 @@
                 </md-table-body>
             </md-table>
         </article>
+        <div class="grafico" v-show="graficoView">
+            <vue-chart
+                chart-type="PieChart"
+                :columns="columns"
+                :rows="rows"
+                :options="options"
+            ></vue-chart>
+            <md-button class="close" @click="graficoView=false">
+                <md-icon>close</md-icon>
+            </md-button>
+        </div>
     </section>
 </template>
 
@@ -70,6 +81,25 @@
     import { mapState } from 'vuex'
     
     export default {
+        data() {
+            return {
+                graficoView: false,
+                columns: [{
+                    'type': 'string',
+                    'label': 'tema'
+                }, {
+                    'type': 'number',
+                    'label': 'frequência'
+                }],
+                rows: [],
+                options: {
+                    title: "teste",
+                    width: 800,
+                    height: 450,
+                    is3D: true
+                }
+            }
+        },
         computed: mapState([
             'discreta'
         ]),
@@ -78,7 +108,7 @@
                 let values = this.discreta.values;
                 let response = {}
 
-                let numbers = (values.split(' ')).sort((a,b) => a-b);
+                let numbers = (values.split(' ')).sort((a,b) => a-b).map(Number);
                 let indice = [...new Set(numbers)];
 
                 //fi e fia
@@ -108,21 +138,31 @@
                 let moda = numbers.length%2 != 0 ? numbers[parseInt(numbers.length/2)] : 
                         (parseInt(numbers[parseInt(numbers.length/2)-1]) + parseInt(numbers[parseInt(numbers.length/2)]) )/2;
 
+                let media = (numbers.reduce((a, b) => a + b, 0)/numbers.length).toFixed(1);
+
                 response = {
                     ...this.discreta,
-                    indice, fi, fia, fri, fria, moda, res: true
+                    indice, fi, fia, fri, fria, moda, media, res: true
                 }
                 this.$store.commit('SET_DISCRETA', response)       
-      
             },
             viewMap(){
-                alert('o mapa está sendo gerado ...')
+                this.rows = []
+                
+                this.options.title = this.discreta.title;
+                let indice = this.discreta.indice;
+                let fi = this.discreta.fi;
+
+                indice.forEach((item, ind, array) => {
+                    this.rows.push([indice[ind].toString(), fi[ind]])
+                })
+                this.graficoView = true;
             }
         }
     }
 </script>
 
-<style>
+<style scoped>
     .clear {
         clear: both;
     }
@@ -140,5 +180,20 @@
     }
     .total {
         font-weight: 700 !important;
+    }
+    .grafico {
+        background: rgba(0,0,0,0.5);
+        position: absolute;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        padding: 50px 0 0 50px;
+    }
+    .close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: white;
     }
 </style>
