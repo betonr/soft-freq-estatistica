@@ -15,6 +15,10 @@ Software desenvolvido em vuejs e electron para gerar tabela e gráficos de frequ
 
 ## PRE-VIEW
 
-* ![HOME - VARIÁVEL DISCRETA](https://github.com/betonr/soft-freq-estatistica/blob/master/public/images/tela_principal.png) 
-* ![RESULT TABLE - VARIÁVEL CONTINUA](https://github.com/betonr/soft-freq-estatistica/blob/master/public/images/table_continua_result.png) 
-* ![RESULT GRAPHIC - VARIÁVEL CONTINUA](https://github.com/betonr/soft-freq-estatistica/blob/master/public/images/graphic_continua_result.png) 
+### ![HOME - VARIÁVEL DISCRETA](https://github.com/betonr/soft-freq-estatistica/blob/master/public/images/tela_principal.png)
+
+
+### ![RESULT TABLE - VARIÁVEL CONTINUA](https://github.com/betonr/soft-freq-estatistica/blob/master/public/images/table_continua_result.png) 
+
+
+### ![RESULT GRAPHIC - VARIÁVEL CONTINUA](https://github.com/betonr/soft-freq-estatistica/blob/master/public/images/graphic_continua_result.png) 
