@@ -27,8 +27,7 @@
                 </md-button>
                 <span style="float:right;">
                     Média: {{ discreta.media }} |
-                    Moda: {{ discreta.moda }} |
-                    Desvio Padrão: {{ discreta.desvio_padrao }}
+                    Mediana: {{ discreta.mediana }} 
                 </span> 
             </h2>
             <md-table>
@@ -49,15 +48,15 @@
                         <md-table-cell>{{ value }}</md-table-cell>
                         <md-table-cell>{{ discreta.fi[indice] }}</md-table-cell>
                         <md-table-cell>{{ discreta.fia[indice] }}</md-table-cell>
-                        <md-table-cell>{{ discreta.fri[indice] }}</md-table-cell>
-                        <md-table-cell>{{ discreta.fria[indice] }}</md-table-cell>
+                        <md-table-cell>{{ (discreta.fri[indice]).toFixed(4) }}</md-table-cell>
+                        <md-table-cell>{{ (discreta.fria[indice]).toFixed(4) }}</md-table-cell>
                     </md-table-row>
                     <md-table-row>
                         <md-table-cell></md-table-cell>
                         <md-table-cell></md-table-cell>
                         <md-table-cell class="total">&Sigma;fi = {{ discreta.fi.reduce((a, b) => a + b, 0) }}</md-table-cell>
                         <md-table-cell></md-table-cell>
-                        <md-table-cell class="total">&Sigma;fri = {{ discreta.fri.reduce((a, b) => a + b, 0) }}</md-table-cell>
+                        <md-table-cell class="total">&Sigma;fri = {{ (discreta.fri.reduce((a, b) => a + b, 0)).toFixed(4) }}</md-table-cell>
                         <md-table-cell></md-table-cell>
                     </md-table-row>
                 </md-table-body>
@@ -93,7 +92,7 @@
                 }],
                 rows: [],
                 options: {
-                    title: "teste",
+                    title: "",
                     width: 800,
                     height: 450,
                     is3D: true
@@ -105,7 +104,7 @@
         ]),
         methods: {
             generateTable() {
-                let values = this.discreta.values;
+                let values = this.discreta.values.trim().replace(',','.').replace('  ',' ').replace('   ',' ').replace(/\n/g,' ');
                 let response = {}
 
                 let numbers = (values.split(' ')).sort((a,b) => a-b).map(Number);
@@ -134,15 +133,14 @@
                     fria.push( parseFloat((fia[indice]/total).toFixed(4)) );
                 });
 
-                //media, moda, desvio
-                let moda = numbers.length%2 != 0 ? numbers[parseInt(numbers.length/2)] : 
+                //media, mediana
+                let mediana = numbers.length%2 != 0 ? numbers[parseInt(numbers.length/2)] : 
                         (parseInt(numbers[parseInt(numbers.length/2)-1]) + parseInt(numbers[parseInt(numbers.length/2)]) )/2;
-
                 let media = (numbers.reduce((a, b) => a + b, 0)/numbers.length).toFixed(1);
 
                 response = {
                     ...this.discreta,
-                    indice, fi, fia, fri, fria, moda, media, res: true
+                    indice, fi, fia, fri, fria, mediana, media, res: true
                 }
                 this.$store.commit('SET_DISCRETA', response)       
             },

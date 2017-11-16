@@ -7,7 +7,18 @@ const store = new Vuex.Store({
   state: {
     continua: {
       title: '',
-      values: ''
+      values: '',
+      min: 0,
+      max: 0,
+      fi: [],
+      fia: [],
+      fri: [],
+      fria: [],
+      amplitude: 0,
+      indice: [],
+      media: 0,
+      mediana: 0,
+      res: false
     },
     discreta: {
       title: '',
@@ -18,8 +29,7 @@ const store = new Vuex.Store({
       fri: [],
       fria: [],
       media: 0,
-      moda: 0,
-      desvio_padrao: 0,
+      mediana: 0,
       res: false
     }
   },
@@ -28,7 +38,9 @@ const store = new Vuex.Store({
   mutations: {
     SET_DISCRETA(state, response){
       state.discreta = response
-      console.log(state.discreta)
+    },
+    SET_CONTINUA(state, response){
+      state.continua = response
     }
   },
   getters: {
